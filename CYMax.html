@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<HTML>                                                           
+<HEAD>
+<title>The Maxima of CY Aquarii</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="language" content="en" />
+	<meta name="description" content="" />
+	<meta name="keywords" content="" />
+	<script src="http://heartcode-canvasloader.googlecode.com/files/heartcode-canvasloader-min-0.9.1.js"></script>
+  <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
+  <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+  <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+  <link rel="stylesheet" href="/resources/demos/style.css">
+  <script>
+  $(function() {
+    $("#Qdatepicker").datepicker({ dateFormat: "dd/mm/yy" });
+  });
+  </script>  
+	<link rel="stylesheet" href="style.css"/>
+<style>
+.wrapper1 {
+	
+			position:absolute;
+			margin-left:100px;
+			margin-top:-27px;
+			width: 560px;
+
+	}
+	#Qdatepicker{
+		font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
+		border: 2px solid;
+		border-color:#dfdfdf;
+		height:16px;
+		font-size:100%;
+		text-align: center;
+		color:#4C4C4C;
+		
+		}
+		
+		#mytext1{
+		font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
+		border: 2px solid;
+		border-color:#dfdfdf;
+		height:16px;
+		font-size:90%;
+		text-align: left;
+		color:#4C4C4C;
+		
+		}
+		
+		
+	#mytext1:focus {
+    color:#4C4C4C;
+}	
+	#Qdatepicker:focus {
+    color:#4C4C4C;
+}
+
+.calc {
+	background-color:#ededed;
+	-webkit-border-top-left-radius:0px;
+	-moz-border-radius-topleft:0px;
+	border-top-left-radius:0px;
+	-webkit-border-top-right-radius:0px;
+	-moz-border-radius-topright:0px;
+	border-top-right-radius:0px;
+	-webkit-border-bottom-right-radius:0px;
+	-moz-border-radius-bottomright:0px;
+	border-bottom-right-radius:0px;
+	-webkit-border-bottom-left-radius:0px;
+	-moz-border-radius-bottomleft:0px;
+	border-bottom-left-radius:0px;
+	text-indent:0px;
+	border:1px solid #dcdcdc;
+	display:inline-block;
+	color:#777777;
+	font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
+	font-size:15px;
+	font-style:normal;
+	height:19px;
+	line-height:19px;
+	width:69px;
+	text-decoration:none;
+	text-align:center;
+}.calc:hover {
+	background-color:#dfdfdf;
+}.calc:active {
+	position:relative;
+	top:1px;
+}
+
+	
+			body {
+				background-color:#f3f4f5;
+				font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
+				margin:auto;
+        width: 560px;
+        height: 800px;
+        color:#4C4C4C;
+        overflow: auto;
+					}
+			
+			h1 {
+				color:#4C4C4C;
+				margin:-20px;
+				padding:  35px;
+				text-align: center;
+				font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
+   			font-weight: 300;
+				}
+			FORM { DISPLAY:inline; }
+			div.ex
+			{
+			border-radius: 7px;
+			margin:-20px;
+			padding:  5px 40px 0px 40px;
+			background-color:white;
+			}
+			#table1
+{
+	margin-top:-180px;
+font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
+width:100%;
+border-collapse:collapse;
+}
+#table1 td, #table1 th 
+{
+font-size:1em;
+border:1px solid #FFFFFF;
+padding:3px 7px 2px 7px;
+background-color:#FAFAFA;
+}
+#table1 th 
+{
+font-size:1.1em;
+text-align:left;
+padding-top:5px;
+padding-bottom:4px;
+background-color:#4C4C4C;
+color:#ffffff;
+}
+#table1 td.alt 
+{
+color:#000000;
+background-color:white;
+}
+			
+			
+		
+			
+	</style>
+<script type="text/javascript" src="http://tzdata-javascript.org/tzdata-javascript.js">
+</script>
+<SCRIPT LANGUAGE="JavaScript">
+maxArray = new Array();
+tzoDate = new Date();
+gtzo = tzoDate.getTimezoneOffset();
+oti = 1;
+function otherTimeZone(){
+	oti=0;
+		document.getElementById("mytext1").disabled = false;  
+		document.getElementById("otzo").style.color = "#4C4C4C";
+	
+	}
+function otherTimeZone2(){
+	oti=1;
+		document.getElementById("mytext1").disabled = true;  
+		document.getElementById("otzo").style.color = "gray";
+	
+	}	
+
+function GetPosition(Year, Month, day, Hour, Minutes, Seconds, Planet) {
+  //Compute Positions of All Planets
+  var inputDate = document.getElementById('Qdatepicker').value;
+  y = parseInt(inputDate.substring(6,11));
+  m = parseInt(inputDate.substring(3,5));
+  zDay = parseInt(inputDate.substring(0,2));
+  h = Hour;
+  mins = Minutes;
+  secs = Seconds;
+  h = 12;
+  p = Planet;
+  with (Math) {
+   D=  367 * y - floor(7 * (y + floor((m + 9) / 12)) / 4) + floor(275 * m / 9) + zDay - 730531.5 + h / 24;
+   //the Planets
+      nm[1] = "Mercury"
+      nm[2] = "Venus"
+      nm[3] = "Sun"
+      nm[4] = "Mars"
+      nm[5] = "Jupiter"
+      nm[6] = "Saturn"
+      nm[7] = "Uranus"
+      nm[8] = "Neptune"
+      nm[9] = "Pluto"
+  // Mercury
+      el[1] = (7.00487 - 0.000000178797 * D) * Rads;
+      el[2] = (48.33167 - 0.0000033942 * D) * Rads;
+      el[3] = (77.45645 + 0.00000436208 * D) * Rads;
+      el[4] = 0.38709893 + 1.80698E-11 * D;
+      el[5] = 0.20563069 + 0.000000000691855 * D;
+      el[6] = (Rads * (252.25084 + 4.092338796 * D));
+  // Venus
+      el[7] = (3.39471 - 0.0000000217507 * D) * Rads;
+      el[8] = (76.68069 - 0.0000075815 * D) * Rads;
+      el[9] = (131.53298 - 0.000000827439 * D) * Rads;
+      el[10] = 0.72333199 + 2.51882E-11 * D;
+      el[11] = 0.00677323 - 0.00000000135195 * D;
+      el[12] = (Rads * (181.97973 + 1.602130474 * D));
+  // Earth
+      el[13] = (0.00005 - 0.000000356985 * D) * Rads;
+      el[14] = (-11.26064 - 0.00013863 * D) * Rads;
+      el[15] = (102.94719 + 0.00000911309 * D) * Rads;
+      el[16] = 1.00000011 - 1.36893E-12 * D;
+      el[17] = 0.01671022 - 0.00000000104148 * D;
+      el[18] = (Rads * (100.46435 + 0.985609101 * D));
+  // Mars
+      el[19] = (1.85061 - 0.000000193703 * D) * Rads;
+      el[20] = (49.57854 - 0.0000077587 * D) * Rads;
+      el[21] = (336.04084 + 0.00001187 * D) * Rads;
+      el[22] = 1.52366231 - 0.000000001977 * D;
+      el[23] = 0.09341233 - 0.00000000325859 * D;
+      el[24] = (Rads * (355.45332 + 0.524033035 * D));
+  // Jupiter
+      el[25] = (1.3053 - 0.0000000315613 * D) * Rads;
+      el[26] = (100.55615 + 0.00000925675 * D) * Rads;
+      el[27] = (14.75385 + 0.00000638779 * D) * Rads;
+      el[28] = 5.20336301 + 0.0000000166289 * D;
+      el[29] = 0.04839266 - 0.00000000352635 * D;
+      el[30] = (Rads * (34.40438 + 0.083086762 * D));
+  // Saturn
+      el[31] = (2.48446 + 0.0000000464674 * D) * Rads;
+      el[32] = (113.71504 - 0.0000121 * D) * Rads;
+      el[33] = (92.43194 - 0.0000148216 * D) * Rads;
+      el[34] = 9.53707032 - 0.0000000825544 * D;
+      el[35] = 0.0541506 - 0.0000000100649 * D;
+      el[36] = (Rads * (49.94432 + 0.033470629 * D))
+  // Uranus
+      el[37] = (0.76986 - 0.0000000158947 * D) * Rads;
+      el[38] = (74.22988 + 0.0000127873 * D) * Rads;
+      el[39] = (170.96424 + 0.0000099822 * D) * Rads;
+      el[40] = 19.19126393 + 0.0000000416222 * D;
+      el[41] = 0.04716771 - 0.00000000524298 * D;
+      el[42] = (Rads * (313.23218 + 0.011731294 * D))
+  // Neptune
+      el[43] = (1.76917 - 0.0000000276827 * D) * Rads;
+      el[44] = (131.72169 - 0.0000011503 * D) * Rads;
+      el[45] = (44.97135 - 0.00000642201 * D) * Rads;
+      el[46] = 30.06896348 - 0.0000000342768 * D;
+      el[47] = 0.00858587 + 0.000000000688296 * D;
+      el[48] = (Rads * (304.88003 + 0.0059810572 * D));
+  // Pluto
+      el[49] = (17.14175 + 0.0000000841889 * D) * Rads;
+      el[50] = (110.30347 - 0.0000002839 * D) * Rads;
+      el[51] = (224.06676 - 0.00000100578 * D) * Rads;
+      el[52] = 39.48168677 - 0.0000000210574 * D;
+      el[53] = 0.24880766 + 0.00000000177002 * D;
+      el[54] = (Rads * (238.92881 + 0.003931834 * D));
+  q = 6 * (p - 1);
+  ip = el[q + 1];
+  op = el[q + 2];
+  pp = el[q + 3];
+  ap = el[q + 4];
+  ep = el[q + 5];
+  lp = el[q + 6];
+  ie = el[13];
+  oe = el[14];
+  pe = el[15];
+  ae = el[16];
+  ee = el[17];
+  le = el[18];
+  //Get Earth's position using Kepler's equation
+  Me1 = (le - pe);
+    B = Me1 / (2 * pi);
+    Me1 = 2 * pi * (B - floor(abs(B)));
+    if (B<0) { Me1 = 2 * pi * (B + floor(abs(B))); }
+    if (Me1 < 0) { Me1 = 2 * pi + Me1 }
+  e = Me1;
+  delta = 0.05;
+  while (abs(delta) >= pow(10,-12)) {
+   delta = e - ee * sin(e) - Me1;
+   e = e - delta / (1 - ee * cos(e));
+  }
+  ve = 2 * atan(pow(((1 + ee) / (1 - ee)) , 0.5) * tan(0.5 * e));
+  if (ve < 0) { ve = ve + 2 * pi }
+  re = ae * (1 - ee * ee) / (1 + ee * cos(ve));
+  xe = re * cos(ve + pe);
+  ye = re * sin(ve + pe);
+  ze = 0;
+  //Get planet's position using Kepler's equation
+  mp = (lp - pp);
+    B = mp / (2 * pi);
+    mp = 2 * pi * (B - floor(abs(B)));
+    if (B<0) { mp = 2 * pi * (B + floor(abs(B))); }
+    if (mp < 0) { mp = 2 * pi + mp }
+  e = mp;
+  delta = 0.05;
+  while (abs(delta) >= pow(10,-12)) {
+   delta = e - ep * sin(e) - mp;
+   e = e - delta / (1 - ep * cos(e));
+  }
+  vp = 2 * atan(pow(((1 + ep) / (1 - ep)) , 0.5) * tan(0.5 * e));
+  if (vp < 0) { vp = vp + 2 * pi }
+  rp = ap * (1 - ep * ep) / (1 + ep * cos(vp));
+  xh = rp * (cos(op) * cos(vp + pp - op) - sin(op) * sin(vp + pp - op) * cos(ip));
+  yh = rp * (sin(op) * cos(vp + pp - op) + cos(op) * sin(vp + pp - op) * cos(ip));
+  zh = rp * (sin(vp + pp - op) * sin(ip));
+  xg = xh - xe;
+  yg = yh - ye;
+  zg = zh;
+  //compute RA and DEC
+  ecl = 23.439292 * Rads;  //Updated 1-29-2009 429 instead of 439
+  xeq = xg;
+  yeq = yg * cos(ecl) - zg * sin(ecl);
+  zeq = yg * sin(ecl) + zg * cos(ecl);
+  ra = atan(yeq/ xeq)*12/pi;
+  if (xeq < 0) {
+    ra = ra + 12;
+  }
+  if (yeq < 0) { if (xeq>0) { ra = ra + 24 } }
+  dec = 180*atan(zeq / pow((xeq * xeq + yeq * yeq),0.5))/pi;
+  // Sun Coodinates
+  xeq = xe;
+  yeq = ye * cos(ecl) - ze * sin(ecl);
+  zeq = ye * sin(ecl) + ze * cos(ecl);
+  rae = 12 + atan(yeq/ xeq)*12/pi;
+  if (xe < 0) {
+    rae = rae + 12;
+  }
+  if (ye < 0) { if (xe>0) { rae = rae + 24 } }
+  dece = -180*atan(zeq / pow((xeq * xeq + yeq * yeq),0.5))/pi;
+  }
+  if (p==3) {
+    ra=rae;
+    dec=dece;
+  }
+   if (ra<12) {
+     raa=12-ra;
+   } else {
+     raa=36-ra;
+   }
+   xpix=32+Math.floor(raa*965/24);
+   ypix=201+Math.floor(dec*-3);
+}
+
+function gethjd(form) {
+	locationInput = "UT";
+		timezones=tzdata_javascript.timezones();
+	timezone_array=Object.keys(timezones).sort();
+
+	if(document.getElementById('mytext1').value == "Siding Springs")
+	{
+		userLocation="Sydney";
+	}
+	else if(document.getElementById('mytext1').value == "Mayhill")
+	{
+		userLocation="US/Mountain";
+	}
+	else if(document.getElementById('mytext1').value == "Bruneck")
+	{
+		userLocation="CET";
+	}
+	else if(document.getElementById('mytext1').value == "Mudler")
+	{
+		userLocation="CET";
+	}
+	else
+	{
+		userLocation=	document.getElementById('mytext1').value;
+	}
+	for(i=0; i<timezone_array.length; i++)
+	{
+		if(document.getElementById('mytext1').value == "" && oti == 0)
+		{
+		alert("Type something!");
+		break;	
+		}
+		
+	if (timezone_array[i].indexOf(userLocation.replace(" ","_")) >= 0){
+		locationInput = timezone_array[i];
+		
+		}
+	
+	}
+
+  // Sun
+    MM=0;
+    DD=0;
+    YY=0;
+    HR=0;
+    MN=0;
+    SC=0;
+  GetPosition(YY,MM,DD,HR,MN,SC,3);
+    rah=Math.floor(ra);
+    ram=Math.floor((ra - Math.floor(ra))*60);
+    decd=Math.floor(Math.abs(dec));
+    if (dec<0) { decd=-1*decd };
+    decm=Math.floor((Math.abs(dec)- Math.floor(Math.abs(dec)))*60);
+  // Earth
+    dec=-1*dec;
+    ra=ra+12;
+    if (ra>24) {
+      ra=ra-24;
+    } 
+    rah=Math.floor(ra);
+    ram=Math.floor((ra - Math.floor(ra))*60);
+    decd=Math.floor(Math.abs(dec));
+    if (dec<0) { decd=-1*decd };
+    decm=Math.floor((Math.abs(dec)- Math.floor(Math.abs(dec)))*60);
+ //Object    
+    ORAH=22;
+    ORAM=37;
+    ORAS=48;
+    ORA = (ORAH + ORAM/60 + ORAS/3600)*15;
+    ODECD=1;
+    ODECM=32;
+    ODECS=4;
+    ODEC = Math.abs(ODECD) + ODECM/60 + ODECS/3600;
+    if (ODECD<0) { ODEC=-1*ODEC };
+
+    //ORA=ra;
+    //ODEC=dec;
+ //Earth XYZ
+    cel = Math.cos(dec * pi/180);
+    earthx = Math.cos(ra * pi/12) * cel;
+    earthy = Math.sin(ra * pi/12) * cel;
+    earthz = Math.sin(dec * pi/180);
+//Object XYZ
+    cel = Math.cos(ODEC * pi/180);
+    objectx = Math.cos(ORA * pi/180) * cel;
+    objecty = Math.sin(ORA * pi/180) * cel;
+    objectz = Math.sin(ODEC * pi/180);
+//Light Time (Minutes per AU)
+    ausec=8.3168775;
+    correction = ausec * (earthx * objectx + earthy * objecty + earthz * objectz);
+    D=D+2451545;
+    D=D+correction/(24*60);
+    refMax = 2426159.5132;
+    period = 0.0610383466; 
+    ASDF = "Heliocentric time correction: ";
+    ASDF = ASDF+correction+" min";
+    check = new Boolean(0);
+    firstMax = 0;
+    countMax = 0; 
+    inputDate = document.getElementById('Qdatepicker').value;
+    cDate = new Date(inputDate.substring(6,11), (inputDate.substring(3,5)-1), inputDate.substring(0,2));
+    tzOffsetForCalc = cDate.getTimezoneOffset()*(-1000*60*60);
+    if(oti == 1)
+    {
+    	tzOffsetForCalc = cDate.getTimezoneOffset()*(-1000*60);
+    }
+    else
+    {
+    newTimeZone=new tzdata_javascript.zoneinfo(locationInput);
+    localtime_newTimeZone=newTimeZone.localtime(cDate);
+ 		tzOffsetForCalc = localtime_newTimeZone.ttinfo.offset;
+ 		}
+ 		testNTZO = 0;
+ 		if(tzOffsetForCalc < 0)
+ 		{
+ 			testNTZO = 10;
+ 		}
+ 		    table = "<table id='table1' border='1'><tr><th>Local times of maxima</th><th>Times of maxima(UT)</th></tr>";
+    for(var i=1; i<30; i++)
+    { 
+    nextMax = Math.floor(((D-refMax-0.5)/period)+(i+firstMax))*period+refMax-correction/(24*60);
+    nextMaxUT = (((nextMax-(D-correction/(24*60)-0.5))*24*60*60*1000)+Date.parse(cDate));
+    myDate = new Date(nextMaxUT);
+    nextMaxUT = nextMaxUT + tzOffsetForCalc;
+    myDateTC = new Date(nextMaxUT);
+    ASDF = ASDF + "<br>" + myDateTC;
+    if((myDateTC.getHours()>=15 || check == 1) && ((testNTZO-i)<=0 || check == 1))
+    {
+    	if(check == 0)
+    	{
+    	firstMax = i-1;	
+    	i=1;
+    	check = 1;
+    	}
+    check = new Boolean(1);
+    table += "<tr><td"
+    if(myDateTC.toString().substring(8,10) == document.getElementById('Qdatepicker').value.substring(0,2))
+    {
+    	table += " class='alt'";
+    }
+    table += " id='td"
+    table += countMax
+    table += "'"
+    table += ">"
+    table += myDateTC.toString().substring(16,21)+"</td>";
+    maxArray[countMax]=myDateTC.toString();
+    table += "<td"
+    if(myDate.toString().substring(8,10) == document.getElementById('Qdatepicker').value.substring(0,2))
+    {
+    	table += " class='alt'";
+    }
+
+    table += ">"
+    
+    table += myDate.toString().substring(16,21)+"         "+"</td></tr><br />";
+    countMax++;
+     
+    if(myDateTC.getHours() > 6 && myDateTC.getHours() < 11)
+    {
+    	document.getElementById("outputMax").innerHTML = 'Heliocentric time correction:  '+ (Math.round(correction*100)/100)+' min';
+    	table += "</table>";
+    	document.getElementById('wrapper').innerHTML = table;	
+    	break;
+    	}
+  	}
+		}
+
+		colorMax();
+
+	
+}
+
+
+
+//****************************************************************************************
+var output = ' ';
+var n=965;
+var j=1;
+var pi = 3.141592654;
+var Rads = pi / 180;
+var el = new Array();
+var nm = new Array();
+var dateForAlt = new Date();
+var degForAlt = 0;
+var degForAz = 0;
+html5PositionLong;
+html5PositionLat;
+
+function colorMax()
+{
+for (var i = 0; i < maxArray.length; i++) {
+ dateForAlt = new Date(maxArray[i]);
+ testcalc();
+ if(degForAlt <= 10)
+ {
+ document.getElementById("td"+i).style.color="red";
+ }
+ else if(degForAlt <= 20 && degForAlt > 10)
+ {
+ document.getElementById("td"+i).style.color="orange";
+ }
+ else if(degForAlt <= 30 && degForAlt > 20)
+ {
+ document.getElementById("td"+i).style.color="#e9be40";
+ }
+ else
+ {
+ document.getElementById("td"+i).style.color="green";
+ }
+}
+}
+
+function setHTML5Location()
+{
+		 if (navigator.geolocation)
+    {
+    navigator.geolocation.getCurrentPosition(showPosition);
+    
+    }
+  else{alert("Geolocation is not supported by this browser.");}	
+}
+function testcalc()
+{
+			
+	  var lat_degrees = Math.floor(html5PositionLat);
+    var lat_minutes = Math.round(html5PositionLat%1*60);
+    var lon_degrees = Math.floor(html5PositionLong);
+    var lon_minutes = Math.round(html5PositionLong%1*60);
+    var dtg_year    = dateForAlt.getFullYear();
+    var dtg_month   = dateForAlt.getMonth()+1;
+    var dtg_day     = dateForAlt.getDate();
+    var dtg_hour    = dateForAlt.getHours();
+    var dtg_minute  = dateForAlt.getMinutes();
+    var dtg_second  = dateForAlt.getSeconds();
+    compute(lat_degrees,lat_minutes, lon_degrees, lon_minutes, dtg_year, dtg_month, dtg_day, dtg_hour, dtg_minute, dtg_second);
+	
+}
+function showPosition(position)
+  {
+  html5PositionLong = position.coords.longitude; 
+  html5PositionLat = position.coords.latitude;
+  document.getElementById("canvasloader-container").remove();
+  }
+ 
+ 
+
+// compute altitude and azimuth
+function compute(lat_degrees,lat_minutes, lon_degrees, lon_minutes, dtg_year, dtg_month, dtg_day, dtg_hour, dtg_minute, dtg_second)
+{
+    var dec_degrees = 1;
+    var dec_minutes = 32;
+    var ra_hours    = 22;
+    var ra_minutes  = 38; 
+
+    if (isNaN(dec_degrees)||(Math.abs(dec_degrees) >=  90)||
+        isNaN(dec_minutes)||(dec_minutes < 0)||(dec_minutes >=  60)||
+        isNaN(ra_hours)   ||(ra_hours    < 0)||(ra_hours    >=  24)||
+        isNaN(ra_minutes) ||(ra_minutes  < 0)||(ra_minutes  >=  60))
+    {
+        window.alert("Invalid Object data!");
+        return;
+    }
+
+    if (isNaN(lat_degrees)||(Math.abs(lat_degrees) >=  90)||
+        isNaN(lat_minutes)||(lat_minutes < 0)||(lat_minutes >=  60)||
+        isNaN(lon_degrees)||(Math.abs(lon_degrees) >= 180)||
+        isNaN(lon_minutes)||(lon_minutes < 0)||(lon_minutes >=  60))
+    {
+        window.alert("Invalid Observer data!");
+        return;
+    }
+
+    var now = new Date(dtg_year, dtg_month - 1, dtg_day, dtg_hour, dtg_minute, dtg_second);
+
+    if (isNaN(now.getTime())||
+        (dtg_month  < 1)||(dtg_month  >=  13)||
+        (dtg_day    < 1)||(dtg_day    >=  32)||
+        (dtg_hour   < 0)||(dtg_hour   >=  24)||
+        (dtg_minute < 0)||(dtg_minute >=  60)||
+        (dtg_second < 0)||(dtg_second >=  60))
+    {
+        window.alert("Invalid Date/Time data!");
+        return;
+    }
+
+    var ra  = ra2real( ra_hours, ra_minutes );
+    var dec = dms2real( dec_degrees, dec_minutes );
+    var lat = dms2real( lat_degrees, lat_minutes );
+    var lon = dms2real( lon_degrees, lon_minutes );
+
+    coord_to_horizon(now, ra, dec, lat, lon);
+   	degForAlt = hrz_altitude;
+		degForAz = hrz_azimuth;
+}
+
+// compute horizon coordinates from ra, dec, lat, lon, and utc
+// ra, dec, lat, lon in  degrees
+// utc is a Date object
+// results returned in hrz_altitude, hrz_azimuth
+function coord_to_horizon( utc, ra, dec, lat, lon )
+{
+    // compute hour angle in degrees
+    var ha = mean_sidereal_time( utc, lon ) - ra;
+    if (ha < 0) ha = ha + 360;
+    // convert degrees to radians
+    ha  = ha*Math.PI/180
+    dec = dec*Math.PI/180
+    lat = lat*Math.PI/180
+
+    // compute altitude in radians
+    var sin_alt = Math.sin(dec)*Math.sin(lat) + Math.cos(dec)*Math.cos(lat)*Math.cos(ha);
+    var alt = Math.asin(sin_alt);
+    
+    // compute azimuth in radians
+    // divide by zero error at poles or if alt = 90 deg
+    var cos_az = (Math.sin(dec) - Math.sin(alt)*Math.sin(lat))/(Math.cos(alt)*Math.cos(lat));
+    var az  = Math.acos(cos_az);
+
+    // convert radians to degrees
+    hrz_altitude = alt*180/Math.PI;
+    hrz_azimuth  = az*180/Math.PI;
+
+    // choose hemisphere
+    if (Math.sin(ha) > 0) hrz_azimuth = 360 - hrz_azimuth;
+}
+
+// Compute the Mean Sidereal Time in units of degrees. 
+// Use lon := 0 to get the Greenwich MST. 
+// East longitudes are positive; West longitudes are negative
+// returns: time in degrees
+function mean_sidereal_time(now, lon)
+{
+    var year   = now.getFullYear();
+    var month  = now.getMonth() + 1;
+    var day    = now.getDate();
+    var hour   = now.getHours();
+    var minute = now.getMinutes();
+    var second = now.getSeconds();
+
+    if ((month == 1)||(month == 2))
+    {
+        year  = year - 1;
+        month = month + 12;
+    }
+
+    var a = Math.floor(year/100);
+    var b = 2 - a + Math.floor(a/4);
+    var c = Math.floor(365.25*year);
+    var d = Math.floor(30.6001*(month + 1));
+
+    // days since J2000.0
+    var jd = b + c + d - 730550.5 + day + (hour + minute/60.0 + second/3600.0)/24.0;
+    
+    // julian centuries since J2000.0
+    var jt = jd/36525.0;
+
+    // the mean sidereal time in degrees
+    var mst = 280.46061837 + 360.98564736629*jd + 0.000387933*jt*jt - jt*jt*jt/38710000 + lon;
+
+    // in degrees modulo 360.0
+    if (mst > 0.0) 
+        while (mst > 360.0) mst = mst - 360.0;
+    else
+        while (mst < 0.0)   mst = mst + 360.0;
+        
+    return mst;
+}
+
+function getDateTime() 
+{
+    // date and time at Greenwich (UTC)
+    var now = new Date();
+    calc.date_time.value = now;
+}
+
+// format two digits with leading zero if needed
+function d2( n )
+{
+    var s = "";
+
+    if (n < 10) s = "0" + n;
+    else        s = n;
+
+    return s;
+}
+
+// convert right ascension (hours, minutes) to degrees as real
+function ra2real( hr, min )
+{
+    return 15*(hr + min/60);
+}
+
+// convert angle (deg, min) to degrees as real
+function dms2real( deg, min )
+{
+    var rv;
+
+    if (deg < 0)
+        rv = deg - min/60;
+    else
+        rv = deg + min/60;
+
+    return rv;
+}
+</Script>
+</HEAD>
+
+<BODY onLoad="setHTML5Location()">
+	
+	<h1>The Maxima of CY Aquarii</h1>	
+	<div class="ex">
+<FORM style='display:inline;'>
+<h3>Date</h3>
+&nbsp;&nbsp;<input type="text" name="input" id="Qdatepicker" SIZE="10">&nbsp;&nbsp;&nbsp;<p style="display:inline">(DD/MM/YYYY)</p>
+
+
+<p>
+
+<h3>Timezone</h3>
+ &nbsp;&nbsp;&nbsp; <input type="radio" name="otzRadio" id="radio2" value="LT" onclick="otherTimeZone2()" class="css-checkbox" checked="checked"/><label for="radio2" class="css-label"></label> use your local time, with a time zone offset of 
+ <p style="display:inline" id="tzoop">--</p> <p style="display:inline">hour(s) from UT</p>&nbsp;&nbsp;&nbsp;&nbsp;<br> &nbsp;&nbsp;&nbsp;
+<input type="radio" name="otzRadio" id="radio1" class="css-checkbox" onclick="otherTimeZone()" value="OT"/><label for="radio1" class="css-label"></label> use other location for local time: &nbsp;<input type="text" name="input" id="mytext1" SIZE="20">
+
+
+<p>
+  
+  <link rel="stylesheet" href="/resources/demos/style.css">
+<script>
+  $(function() {
+    var availableTags = [
+      "Mayhill",
+      "Siding Springs",
+      "Abidjan", "Accra", "Addis Ababa", "Algiers", "Asmara", "Asmera", "Bamako", "Bangui", "Banjul", "Bissau", "Blantyre", "Brazzaville", "Bujumbura", "Cairo", "Casablanca", "Ceuta", "Conakry", "Dakar", "Dar es Salaam", "Djibouti", "Douala", "El Aaiun", "Freetown", "Gaborone", "Harare", "Johannesburg", "Juba", "Kampala", "Khartoum", "Kigali", "Kinshasa", "Lagos", "Libreville", "Lome", "Luanda", "Lubumbashi", "Lusaka", "Malabo", "Maputo", "Maseru", "Mbabane", "Mogadishu", "Monrovia", "Nairobi", "Ndjamena", "Niamey", "Nouakchott", "Ouagadougou", "Porto-Novo", "Sao Tome", "Timbuktu", "Tripoli", "Tunis", "Windhoek", "Adak", "Anchorage", "Anguilla", "Antigua", "Araguaina", "Buenos Aires", "Catamarca", "ComodRivadavia", "Cordoba", "Jujuy", "La Rioja", "Mendoza", "Rio Gallegos", "Salta", "San Juan", "San Luis", "Tucuman", "Ushuaia", "Aruba", "Asuncion", "Atikokan", "Atka", "Bahia", "Bahia Banderas", "Barbados", "Belem", "Belize", "Blanc-Sablon", "Boa Vista", "Bogota", "Boise", "Buenos Aires", "Cambridge Bay", "Campo Grande", "Cancun", "Caracas", "Catamarca", "Cayenne", "Cayman", "Chicago", "Chihuahua", "Coral Harbour", "Cordoba", "Costa Rica", "Creston", "Cuiaba", "Curacao", "Danmarkshavn", "Dawson", "Dawson Creek", "Denver", "Detroit", "Dominica", "Edmonton", "Eirunepe", "El Salvador", "Ensenada", "Fort Wayne", "Fortaleza", "Glace Bay", "Godthab", "Goose Bay", "Grand Turk", "Grenada", "Guadeloupe", "Guatemala", "Guayaquil", "Guyana", "Halifax", "Havana", "Hermosillo", "Indianapolis", "Knox", "Marengo", "Petersburg", "Tell City", "Vevay", "Vincennes", "Winamac", "Indianapolis", "Inuvik", "Iqaluit", "Jamaica", "Jujuy", "Juneau", "Louisville", "Monticello", "Knox IN", "Kralendijk", "La Paz", "Lima", "Los Angeles", "Louisville", "Lower Princes", "Maceio", "Managua", "Manaus", "Marigot", "Martinique", "Matamoros", "Mazatlan", "Mendoza", "Menominee", "Merida", "Metlakatla", "Mexico City", "Miquelon", "Moncton", "Monterrey", "Montevideo", "Montreal", "Montserrat", "Nassau", "New York", "Nipigon", "Nome", "Noronha", "Beulah", "Center", "New Salem", "Ojinaga", "Panama", "Pangnirtung", "Paramaribo", "Phoenix", "Port-au-Prince", "Port of Spain", "Porto Acre", "Porto Velho", "Puerto Rico", "Rainy River", "Rankin Inlet", "Recife", "Regina", "Resolute", "Rio Branco", "Rosario", "Santa Isabel", "Santarem", "Santiago", "Santo Domingo", "Sao Paulo", "Scoresbysund", "Shiprock", "Sitka", "St Barthelemy", "St Johns", "St Kitts", "St Lucia", "St Thomas", "St Vincent", "Swift Current", "Tegucigalpa", "Thule", "Thunder Bay", "Tijuana", "Toronto", "Tortola", "Vancouver", "Virgin", "Whitehorse", "Winnipeg", "Yakutat", "Yellowknife", "Casey", "Davis", "DumontDUrville", "Macquarie", "Mawson", "McMurdo", "Palmer", "Rothera", "South Pole", "Syowa", "Vostok", "Longyearbyen", "Aden", "Almaty", "Amman", "Anadyr", "Aqtau", "Aqtobe", "Ashgabat", "Ashkhabad", "Baghdad", "Bahrain", "Baku", "Bangkok", "Beirut", "Bishkek", "Brunei", "Calcutta", "Choibalsan", "Chongqing", "Chungking", "Colombo", "Dacca", "Damascus", "Dhaka", "Dili", "Dubai", "Dushanbe", "Gaza", "Harbin", "Hebron", "Ho Chi Minh", "Hong Kong", "Hovd", "Irkutsk", "Istanbul", "Jakarta", "Jayapura", "Jerusalem", "Kabul", "Kamchatka", "Karachi", "Kashgar", "Kathmandu", "Katmandu", "Khandyga", "Kolkata", "Krasnoyarsk", "Kuala Lumpur", "Kuching", "Kuwait", "Macao", "Macau", "Magadan", "Makassar", "Manila", "Muscat", "Nicosia", "Novokuznetsk", "Novosibirsk", "Omsk", "Oral", "Phnom Penh", "Pontianak", "Pyongyang", "Qatar", "Qyzylorda", "Rangoon", "Riyadh", "Riyadh87", "Riyadh88", "Riyadh89", "Saigon", "Sakhalin", "Samarkand", "Seoul", "Shanghai", "Singapore", "Taipei", "Tashkent", "Tbilisi", "Tehran", "Tel Aviv", "Thimbu", "Thimphu", "Tokyo", "Ujung Pandang", "Ulaanbaatar", "Ulan Bator", "Urumqi", "Ust-Nera", "Vientiane", "Vladivostok", "Yakutsk", "Yekaterinburg", "Yerevan", "Azores", "Bermuda", "Canary", "Cape Verde", "Faeroe", "Faroe", "Jan Mayen", "Madeira", "Reykjavik", "South Georgia", "St Helena", "Stanley", "ACT", "Adelaide", "Brisbane", "Broken Hill", "Canberra", "Currie", "Darwin", "Eucla", 
+      "Hobart", "LHI", "Lindeman", "Lord Howe", "Melbourne", "NSW", "North", "Perth", "Queensland", "South", "Tasmania", "Victoria", "West", "Yancowinna", "Acre", "DeNoronha", "East", "West", "CET", "CST6CDT", "Atlantic", "Central", "East-Saskatchewan", "Eastern", "Mountain", "Newfoundland", "Pacific", "Saskatchewan", "Yukon", "Continental", "EasterIsland", "Cuba", "EET", "EST", "EST5EDT", "Egypt", "Eire", "GMT", "GMT+0", "GMT+1", "GMT+10", "GMT+11", "GMT+12", "GMT+2", "GMT+3", "GMT+4", "GMT+5", "GMT+6", "GMT+7", "GMT+8", "GMT+9", "GMT-0", "GMT-1", "GMT-10", "GMT-11", "GMT-12", "GMT-13", "GMT-14", "GMT-2", "GMT-3", "GMT-4", "GMT-5", "GMT-6", "GMT-7", "GMT-8", "GMT-9", "GMT0", "Greenwich", "UCT", "UTC", "Universal", "Zulu", "Amsterdam", "Andorra", "Athens", "Belfast", "Belgrade", "Berlin", "Bratislava", "Brussels", "Bucharest", "Budapest", "Busingen", "Chisinau", "Copenhagen", "Dublin", "Gibraltar", "Guernsey", "Helsinki", "Isle_of_Man", "Istanbul", "Jersey", "Kaliningrad", "Kiev", "Lisbon", "Ljubljana", "London", "Luxembourg", "Madrid", "Malta", "Mariehamn", "Minsk", "Monaco", "Moscow", "Nicosia", "Oslo", "Paris", "Podgorica", "Prague", "Riga", "Rome", "Samara", "San_Marino", "Sarajevo", "Simferopol", "Skopje", "Sofia", "Stockholm", "Tallinn", "Tirane", "Tiraspol", "Uzhgorod", "Vaduz", "Vatican", "Vienna", "Vilnius", "Volgograd", "Warsaw", "Zagreb", "Zaporozhye", "Zurich", "GB", "GB-Eire", "GMT", "GMT+0", "GMT-0", "GMT0", "Greenwich", "HST", "Hongkong", "Iceland", "Antananarivo", "Chagos", "Christmas", "Cocos", "Comoro", "Kerguelen", "Mahe", "Maldives", "Mauritius", "Mayotte", "Reunion", "Iran", "Israel", "Jamaica", "Japan", "Kwajalein", "Libya", "MET", "MST", "MST7MDT", "BajaNorte", "BajaSur", "General", "Riyadh87", "Riyadh88", "Riyadh89", "NZ", "NZ-CHAT", "Navajo", "PRC", "PST8PDT", "Apia", "Auckland", "Chatham", "Chuuk", "Easter", "Efate", "Enderbury", "Fakaofo", "Fiji", "Funafuti", "Galapagos", "Gambier", "Guadalcanal", "Guam", "Honolulu", "Johnston", "Kiritimati", "Kosrae", "Kwajalein", "Majuro", "Marquesas", "Midway", "Nauru", "Niue", "Norfolk", "Noumea", "Pago_Pago", "Palau", "Pitcairn", "Pohnpei", "Ponape", "Port_Moresby", "Rarotonga", "Saipan", "Samoa", "Tahiti", "Tarawa", "Tongatapu", "Truk", "Wake", "Wallis", "Yap", "Poland", "Portugal", "ROC", "ROK", "Singapore", "Turkey", "UCT", "Alaska", "Aleutian", "Arizona", "Central", "East-Indiana", "Eastern", "Hawaii", "Indiana-Starke", "Michigan", "Mountain", "Pacific", "Pacific-New", "Samoa", "UTC", "Universal", "W-SU", "WET", "Zulu",
+    ];
+    $( "#mytext1" ).autocomplete({
+      source: availableTags
+    });
+  });
+  </script>
+
+<p><a href="#" class="calc" ONCLICK="gethjd(this.form)">Calculate</a>
+		<!-- Create a div which will be the canvasloader wrapper -->	
+	<div id="canvasloader-container" class="wrapper1" style="float:left"></div>
+		
+	<!-- This script creates a new CanvasLoader instance and places it in the wrapper div -->
+	<script type="text/javascript">
+		var cl = new CanvasLoader('canvasloader-container');
+		cl.setColor('#949494'); // default is '#000000'
+		cl.setShape('spiral'); // default is 'oval'
+		cl.setDiameter(28); // default is 40
+		cl.setDensity(46); // default is 40
+		cl.setFPS(30); // default is 24
+		cl.show(); // Hidden by default
+		
+		// This bit is only for positioning - not necessary
+		  var loaderObj = document.getElementById("canvasLoader");
+  		loaderObj.style.position = "absolute";
+  		loaderObj.style["top"] = cl.getDiameter() * -0.5 + "px";
+  		loaderObj.style["left"] = cl.getDiameter() * -0.5 + "px";
+    </script>
+	<script>
+		var d = new Date();
+		var date = ('0' + d.getDate()).slice(-2);('0' + (d.getMonth()+1)).slice(-2);
+		var tzo;
+		date += "/";
+		date += ('0' + (d.getMonth()+1)).slice(-2);
+		date += "/";
+		date += d.getFullYear();
+		tzo = d.getTimezoneOffset()/60*(-1);
+		document.getElementById("Qdatepicker").value = date;
+		document.getElementById("tzoop").innerHTML = tzo;	
+		document.getElementById("mytext1").disabled = true;  
+		document.getElementById("otzo").style.color = "gray";
+	</script><p id="outputMax">Heliocentric time correction: -- min<p> 
+	
+	
+		
+		
+
+
+		
+		
+		
+		
+	
+<BR>
+</div>
+
+</FORM>
+<div id="wrapper">
+
+</div>
+
+
+</BODY>
+
+</HTML>
